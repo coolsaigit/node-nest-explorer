@@ -1,4 +1,3 @@
-
 import React, { useCallback, useState, useEffect } from 'react';
 import {
   ReactFlow,
@@ -13,7 +12,7 @@ import {
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 import { Button } from '@/components/ui/button';
-import { ExpandIcon } from 'lucide-react';
+import { ExpandIcon, Code } from 'lucide-react';
 
 import CustomNode from './CustomNode';
 import { parseMermaidFlowchart, NodeData } from '../utils/mermaidParser';
@@ -417,10 +416,10 @@ const FlowDiagram: React.FC = () => {
     <div className="flow-container h-screen relative">
       <div className="absolute top-4 left-4 z-10 flex gap-2">
         {showEditor ? (
-          <div className="bg-white p-4 rounded-lg shadow-lg w-1/3 max-w-lg">
+          <div className="bg-white p-4 rounded-lg shadow-lg w-2/3 max-w-2xl">
             <h3 className="text-lg font-semibold mb-2">Mermaid Flowchart Code</h3>
             <textarea 
-              className="w-full h-64 border border-gray-300 p-2 rounded mb-2 font-mono text-sm"
+              className="w-full h-80 border border-gray-300 p-2 rounded mb-2 font-mono text-sm"
               value={mermaidCode}
               onChange={(e) => setMermaidCode(e.target.value)}
             />
@@ -446,6 +445,7 @@ const FlowDiagram: React.FC = () => {
               className="bg-white text-gray-800 hover:bg-gray-100"
               variant="outline"
             >
+              <Code className="mr-1" size={16} />
               Edit Mermaid
             </Button>
             <Button 
