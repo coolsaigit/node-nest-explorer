@@ -23,8 +23,18 @@ interface FlowChartProps {
   className?: string;
 }
 
+// Extending Node type to ensure our custom data properties are typed correctly
+interface CustomNode extends Node {
+  data: {
+    label: string;
+    expanded?: boolean;
+    parentNode?: string;
+  };
+}
+
 const FlowChart: React.FC<FlowChartProps> = ({ className }) => {
-  const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
+  // Type cast the initial nodes to CustomNode[] to ensure type safety
+  const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes as CustomNode[]);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
 
   const onConnect = useCallback(
@@ -101,7 +111,9 @@ const FlowChart: React.FC<FlowChartProps> = ({ className }) => {
     if (childParentId === parentId) return true;
     
     const parentNode = nodesList.find((n) => n.id === childParentId);
-    return parentNode ? isDescendant(parentNode.data.parentNode, parentId, nodesList) : false;
+    if (!parentNode) return false;
+    
+    return isDescendant(parentNode.data.parentNode, parentId, nodesList);
   };
 
   return (
