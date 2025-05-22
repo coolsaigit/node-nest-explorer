@@ -106,13 +106,14 @@ const FlowChart: React.FC<FlowChartProps> = ({ className }) => {
   );
   
   // Helper function to check if a node is a descendant of another node
-  const isDescendant = (childParentId: string | undefined, parentId: string, nodesList: Node[]) => {
+  const isDescendant = (childParentId: string | undefined, parentId: string, nodesList: Node[]): boolean => {
     if (!childParentId) return false;
     if (childParentId === parentId) return true;
     
-    const parentNode = nodesList.find((n) => n.id === childParentId);
+    const parentNode = nodesList.find((n) => n.id === childParentId) as CustomNode | undefined;
     if (!parentNode) return false;
     
+    // Now TypeScript knows parentNode.data.parentNode is of type string | undefined
     return isDescendant(parentNode.data.parentNode, parentId, nodesList);
   };
 
