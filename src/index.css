@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -97,5 +98,81 @@
 
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+.flow-container {
+  width: 100%;
+  height: 100vh;
+}
+
+.react-flow__node {
+  padding: 0;
+  border-radius: 8px;
+  width: auto;
+  text-align: center;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
+
+.react-flow__node-custom {
+  background-color: #6495ED;
+  color: white;
+  border: 2px solid #5078D8;
+  border-radius: 8px;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 500;
+}
+
+.react-flow__edge-path {
+  stroke: #b1b1b7;
+  stroke-width: 2;
+}
+
+.collapse-button {
+  position: absolute;
+  bottom: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 24px;
+  height: 24px;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  z-index: 10;
+  font-size: 18px;
+  line-height: 1;
+}
+
+/* Enhanced handle styling */
+.react-flow__handle {
+  width: 10px;
+  height: 10px;
+  background: #ffffff;
+  border: 2px solid #5078D8;
+}
+
+/* Add spacing for nodes */
+.react-flow__node {
+  margin: 15px;
+}
+
+/* Path highlighting styles */
+.react-flow__edge.animated .react-flow__edge-path {
+  animation: flowPathAnimation 2s infinite linear;
+}
+
+@keyframes flowPathAnimation {
+  0% {
+    stroke-dashoffset: 24;
+  }
+  100% {
+    stroke-dashoffset: 0;
   }
 }
