@@ -1,3 +1,4 @@
+
 import React, { useCallback, useState, useEffect } from 'react';
 import {
   ReactFlow,
@@ -11,6 +12,8 @@ import {
   BackgroundVariant,
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
+import { Button } from '@/components/ui/button';
+import { ExpandIcon } from 'lucide-react';
 
 import CustomNode from './CustomNode';
 import { parseMermaidFlowchart, NodeData } from '../utils/mermaidParser';
@@ -335,6 +338,31 @@ const FlowDiagram: React.FC = () => {
     });
   }, [selectedNode, setNodes, setEdges]);
 
+  // Handle expand all nodes functionality
+  const handleExpandAll = useCallback(() => {
+    setNodes((nds) => {
+      const updatedNodes = nds.map((node) => {
+        // If the node is collapsible, set it to expanded
+        if (node.data && node.data.isCollapsible) {
+          return {
+            ...node,
+            data: {
+              ...node.data,
+              isCollapsed: false,
+            },
+          };
+        }
+        return node;
+      });
+      
+      // Reposition nodes and update edges after expanding all
+      const positionedNodes = positionNodes(updatedNodes);
+      setEdges(createEdges(positionedNodes, selectedNode));
+      
+      return positionedNodes;
+    });
+  }, [selectedNode, setNodes, setEdges]);
+
   // Handle node selection
   const onNodeClick = useCallback((event: React.MouseEvent, node: Node) => {
     event.stopPropagation(); // Prevent the click from propagating to the pane
@@ -387,37 +415,50 @@ const FlowDiagram: React.FC = () => {
 
   return (
     <div className="flow-container h-screen relative">
-      {showEditor ? (
-        <div className="absolute top-4 left-4 z-10 bg-white p-4 rounded-lg shadow-lg w-1/3 max-w-lg">
-          <h3 className="text-lg font-semibold mb-2">Mermaid Flowchart Code</h3>
-          <textarea 
-            className="w-full h-64 border border-gray-300 p-2 rounded mb-2 font-mono text-sm"
-            value={mermaidCode}
-            onChange={(e) => setMermaidCode(e.target.value)}
-          />
-          <div className="flex justify-end gap-2">
-            <button 
-              className="px-4 py-1 bg-gray-200 rounded"
-              onClick={() => setShowEditor(false)}
-            >
-              Cancel
-            </button>
-            <button 
-              className="px-4 py-1 bg-blue-500 text-white rounded"
-              onClick={handleMermaidUpdate}
-            >
-              Apply
-            </button>
+      <div className="absolute top-4 left-4 z-10 flex gap-2">
+        {showEditor ? (
+          <div className="bg-white p-4 rounded-lg shadow-lg w-1/3 max-w-lg">
+            <h3 className="text-lg font-semibold mb-2">Mermaid Flowchart Code</h3>
+            <textarea 
+              className="w-full h-64 border border-gray-300 p-2 rounded mb-2 font-mono text-sm"
+              value={mermaidCode}
+              onChange={(e) => setMermaidCode(e.target.value)}
+            />
+            <div className="flex justify-end gap-2">
+              <button 
+                className="px-4 py-1 bg-gray-200 rounded"
+                onClick={() => setShowEditor(false)}
+              >
+                Cancel
+              </button>
+              <button 
+                className="px-4 py-1 bg-blue-500 text-white rounded"
+                onClick={handleMermaidUpdate}
+              >
+                Apply
+              </button>
+            </div>
           </div>
-        </div>
-      ) : (
-        <button 
-          className="absolute top-4 left-4 z-10 bg-white px-4 py-2 rounded-lg shadow-md"
-          onClick={() => setShowEditor(true)}
-        >
-          Edit Mermaid
-        </button>
-      )}
+        ) : (
+          <>
+            <Button 
+              onClick={() => setShowEditor(true)}
+              className="bg-white text-gray-800 hover:bg-gray-100"
+              variant="outline"
+            >
+              Edit Mermaid
+            </Button>
+            <Button 
+              onClick={handleExpandAll}
+              className="bg-white text-gray-800 hover:bg-gray-100"
+              variant="outline"
+            >
+              <ExpandIcon className="mr-1" size={16} />
+              Expand All
+            </Button>
+          </>
+        )}
+      </div>
       <ReactFlow
         nodes={visibleNodes}
         edges={edges}
