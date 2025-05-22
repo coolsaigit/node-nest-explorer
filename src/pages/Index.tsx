@@ -1,7 +1,6 @@
 
 import React from "react";
-import CollapsibleTree from "../components/CollapsibleTree";
-import { treeData } from "../data/treeData";
+import FlowChart from "../components/FlowChart";
 
 const Index = () => {
   return (
@@ -10,14 +9,14 @@ const Index = () => {
         <h1 className="text-2xl font-bold text-center">Hierarchical Flowchart</h1>
       </header>
       
-      <main className="flex-1 w-full max-w-7xl p-6 overflow-auto">
+      <main className="flex-1 w-full max-w-7xl p-6">
         <div className="p-8 bg-white rounded-lg shadow-sm">
           <p className="text-gray-600 mb-8 text-center">
-            Click on a node to collapse/expand its children
+            Click on a node to expand/collapse its children
           </p>
           
-          <div className="overflow-auto py-8">
-            <CollapsibleTree data={treeData} className="min-w-fit" />
+          <div className="h-[70vh] border border-gray-100 rounded-lg">
+            <FlowChart />
           </div>
         </div>
       </main>
