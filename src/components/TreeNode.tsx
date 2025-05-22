@@ -26,30 +26,30 @@ const TreeNode: React.FC<TreeNodeProps> = ({ node, level = 0 }) => {
     <div className="tree-node">
       <div 
         className={cn(
-          "flex items-center gap-1 mb-1 cursor-pointer", 
+          "flex items-center gap-2 mb-2 cursor-pointer", 
           "transition-all duration-200"
         )}
         onClick={toggleExpand}
       >
-        {hasChildren && (
-          <div className="flex items-center justify-center w-5 h-5 text-blue-500">
-            {isExpanded ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
-          </div>
-        )}
         <div 
           className={cn(
             "py-2 px-4 bg-blue-500 text-white rounded-md whitespace-nowrap",
-            "shadow-sm hover:shadow-md transition-shadow duration-200"
+            "shadow-sm hover:shadow-md transition-shadow duration-200 flex items-center gap-2"
           )}
         >
           {node.label}
+          {hasChildren && (
+            <span className="flex items-center justify-center w-5 h-5 bg-blue-400 rounded-full text-white">
+              {isExpanded ? <ChevronDown size={14} /> : <ChevronRight size={14} />}
+            </span>
+          )}
         </div>
       </div>
       
       {hasChildren && isExpanded && (
         <div 
           className={cn(
-            "pl-6 ml-2 border-l border-blue-300",
+            "pl-8 ml-6 border-l-2 border-blue-200",
             "transition-all duration-300"
           )}
         >
