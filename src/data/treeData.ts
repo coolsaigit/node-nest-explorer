@@ -1,5 +1,11 @@
 
-import { TreeNodeData } from "../components/TreeNode";
+import { NodeData } from "../utils/mermaidParser";
+
+export interface TreeNodeData {
+  id: string;
+  label: string;
+  children: TreeNodeData[];
+}
 
 export const treeData: TreeNodeData = {
   id: "main",
