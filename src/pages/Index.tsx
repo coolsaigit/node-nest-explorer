@@ -1,12 +1,30 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+
+import React from "react";
+import CollapsibleTree from "../components/CollapsibleTree";
+import { treeData } from "../data/treeData";
 
 const Index = () => {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-gray-600">Start building your amazing project here!</p>
-      </div>
+    <div className="min-h-screen flex flex-col items-center bg-gray-50">
+      <header className="w-full p-6 bg-white shadow-sm">
+        <h1 className="text-2xl font-bold text-center">Collapsible Node Structure</h1>
+      </header>
+      
+      <main className="flex-1 w-full max-w-7xl p-6 overflow-auto">
+        <div className="p-6 bg-white rounded-lg shadow-sm">
+          <p className="text-gray-600 mb-6 text-center">
+            Click on a node or its arrow to collapse/expand its children
+          </p>
+          
+          <div className="overflow-auto py-8">
+            <CollapsibleTree data={treeData} className="min-w-fit" />
+          </div>
+        </div>
+      </main>
+      
+      <footer className="w-full p-4 text-center text-gray-500 text-sm">
+        <p>Interactive collapsible tree structure demonstration</p>
+      </footer>
     </div>
   );
 };

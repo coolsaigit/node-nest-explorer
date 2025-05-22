@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -84,11 +85,33 @@ export default {
 					to: {
 						height: '0'
 					}
+				},
+				'expand': {
+					from: {
+						height: '0',
+						opacity: '0'
+					},
+					to: {
+						height: 'var(--expanded-height)',
+						opacity: '1'
+					}
+				},
+				'collapse': {
+					from: {
+						height: 'var(--expanded-height)',
+						opacity: '1'
+					},
+					to: {
+						height: '0',
+						opacity: '0'
+					}
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
+				'accordion-up': 'accordion-up 0.2s ease-out',
+				'expand': 'expand 0.3s ease-out',
+				'collapse': 'collapse 0.3s ease-out'
 			}
 		}
 	},
